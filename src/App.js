@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import TransactionForm from "./components/TransactionForm";
+import TransactionList from "./components/TransactionList";
 
-function App() {
+const App = () => {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const storedTransactions = JSON.parse(localStorage.getItem("transactions"));
+    if (storedTransactions) setTransactions(storedTransactions);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
+
+  const addTransaction = (transaction) => {
+    setTransactions([...transactions, transaction]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">
+        Personal Finance Tracker
+      </h1>
+      <TransactionForm addTransaction={addTransaction} />
+      <TransactionList transactions={transactions} />
     </div>
   );
-}
+};
 
 export default App;
