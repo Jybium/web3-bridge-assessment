@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
+import SummaryChart from "./components/Charts";
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
@@ -24,6 +25,7 @@ const App = () => {
         Personal Finance Tracker
       </h1>
       <TransactionForm addTransaction={addTransaction} />
+      <SummaryChart transactions={transactions} />
       <TransactionList transactions={transactions} />
     </div>
   );
